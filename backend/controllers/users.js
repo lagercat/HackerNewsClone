@@ -1,4 +1,6 @@
 const bcrypt = require('bcryptjs');
+const PasswordValidator = require('password-validator');
+const jwt = require('jsonwebtoken');
 const connection = require('../connection');
 
 exports.userCreate = (req, res, next) => {
@@ -7,10 +9,21 @@ exports.userCreate = (req, res, next) => {
         const db = connection.db;
         const collection = db.collection('users');
         collection.find({username: req.body.username})
-            .limit(1).count().then( (userCount) => {
+            .count().then( (userCount) => {
+              const schema = new PasswordValidator();
+              schema
+                  .is().min(8)
+                  .is().max(100)
+                  .has().not().spaces()
+                  .has().digits();
               if (userCount > 0) {
                 res.status(401).json({
                   message: 'Username already taken',
+                });
+              } else if (!req.body.username || !req.body.password
+                || !schema.validate(req.body.password)) {
+                res.status(401).json({
+                  message: 'Invalid credentials',
                 });
               } else {
                 const user = {
@@ -26,4 +39,36 @@ exports.userCreate = (req, res, next) => {
               }
             });
       });
+};
+
+exports.userLogin = (req, res, next) => {
+  const db = connection.db;
+  const collection = db.collection('users');
+  collection.findOne({username: req.body.username}).then((dbUser) => {
+    if (!dbUser) {
+      res.status(401).json({
+        message: 'Wrong username',
+      });
+    } else {
+      bcrypt.compare(req.body.password, dbUser.password).then(
+          (result) => {
+            if (!result) {
+              res.status(401).json({
+                message: 'Wrong password',
+              });
+            }
+            const token = jwt.sign({
+              username: dbUser.username,
+              userId: dbUser._id,
+            }, 'some_secret_key', {
+              expiresIn: '1h',
+            });
+            res.status(200).json({
+              token: token,
+              message: 'Login successful',
+            });
+          }
+      );
+    }
+  });
 };
