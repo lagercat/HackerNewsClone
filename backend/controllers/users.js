@@ -39,6 +39,7 @@ exports.userCreate = (req, res, next) => {
                   } else {
                     res.status(201).json({
                       message: 'User created successfully',
+                      _id: result.insertedId,
                     });
                   }
                 });
