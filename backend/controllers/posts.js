@@ -1,4 +1,5 @@
 const connection = require('../connection');
+const ObjectID = require('mongodb').ObjectId;
 
 exports.postCreate = (req, res, next) => {
   const db = connection.db;
@@ -20,6 +21,7 @@ exports.postCreate = (req, res, next) => {
       } else {
         res.status(201).json({
           message: 'Post created successfully',
+          id: result.insertedId,
         });
       }
     });
@@ -28,4 +30,26 @@ exports.postCreate = (req, res, next) => {
       message: 'Invalid credentials',
     });
   }
+};
+
+exports.getPost = (req, res, next) => {
+  const db = connection.db;
+  const collection = db.collection('posts');
+  const postId = new ObjectID(req.params.id);
+  collection.findOne({_id: postId}, (err, result) => {
+    if (err) {
+      res.status(500).json({
+        message: err,
+      });
+    } else if (!result) {
+      res.status(404).json({
+        message: 'Post not found',
+      });
+    } else {
+      res.status(200).json({
+        message: 'Post received successfully',
+        post: result,
+      });
+    }
+  });
 };
