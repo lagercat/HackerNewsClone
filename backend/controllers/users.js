@@ -32,10 +32,15 @@ exports.userCreate = (req, res, next) => {
                   points: 0,
                 };
                 collection.insertOne(user, (err, result) => {
-                  res.status(201).json({
-                    message: 'User created successfully',
-                  });
-                  // Error case must be checked here
+                  if (err) {
+                    res.status(500).json({
+                      message: err,
+                    });
+                  } else {
+                    res.status(201).json({
+                      message: 'User created successfully',
+                    });
+                  }
                 });
               }
             });
