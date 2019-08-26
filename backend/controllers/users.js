@@ -35,6 +35,7 @@ exports.userCreate = (req, res, next) => {
                   res.status(201).json({
                     message: 'User created successfully',
                   });
+                  // Error case must be checked here
                 });
               }
             });
