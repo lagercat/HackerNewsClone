@@ -156,7 +156,6 @@ exports.deletePost = (req, res, next) => {
   const postId = new ObjectID(req.params.id);
   collection.deleteOne({_id: postId, author: req.userData.Id},
       (err, result) => {
-        console.log(result);
         if (err) {
           res.status(500).json({
             message: err,
