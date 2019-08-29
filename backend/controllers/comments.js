@@ -2,7 +2,7 @@ const connection = require('../connection');
 const ObjectID = require('mongodb').ObjectID;
 
 
-exports.commentCreate = (req, res, next) => {
+exports.createComment = (req, res, next) => {
   const commentsCollection = connection.db.collection('comments');
   const postsCollection = connection.db.collection('posts');
   if (req.body.postId && req.body.content) {
@@ -72,7 +72,7 @@ exports.commentCreate = (req, res, next) => {
   }
 };
 
-exports.commentDelete = (req, res, next) => {
+exports.deleteComment = (req, res, next) => {
   const commentsCollection = connection.db.collection('comments');
   const commentId = new ObjectID(req.params.id);
   commentsCollection.deleteOne({_id: commentId, author: req.userData.userId},

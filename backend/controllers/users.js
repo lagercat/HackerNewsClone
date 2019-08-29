@@ -3,7 +3,7 @@ const PasswordValidator = require('password-validator');
 const jwt = require('jsonwebtoken');
 const connection = require('../connection');
 
-exports.userCreate = (req, res, next) => {
+exports.createUser = (req, res, next) => {
   bcrypt.hash(req.body.password, 10)
       .then((hash) => {
         const db = connection.db;
@@ -48,7 +48,7 @@ exports.userCreate = (req, res, next) => {
       });
 };
 
-exports.userLogin = (req, res, next) => {
+exports.loginUser = (req, res, next) => {
   const db = connection.db;
   const collection = db.collection('users');
   collection.findOne({username: req.body.username}).then((dbUser) => {
