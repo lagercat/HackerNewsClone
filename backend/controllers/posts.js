@@ -12,7 +12,7 @@ exports.createPost = (req, res, next) => {
       title: req.body.title,
       content: req.body.content,
       type: req.body.type,
-      author: req.userData.userId,
+      author: req.userData.Id,
       date: new Date(),
       points: 0,
     };
@@ -45,8 +45,8 @@ exports.updatePost = (req, res, next) => {
         content: req.body.content,
         type: req.body.type,
         author: req.userData.Id,
-        date: req.body.data,
-        points: req.body.points,
+        date: Date.parse(req.body.data),
+        points: parseInt(req.body.points),
       },
     };
     const postId = new ObjectID(req.params.id);
