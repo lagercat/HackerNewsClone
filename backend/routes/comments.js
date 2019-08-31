@@ -6,6 +6,7 @@ const routerObj = express.Router;
 const router = routerObj();
 
 router.post('/create', checkAuth, commentsControllers.createComment);
+router.get('/read/:postId', commentsControllers.readComments);
 router.delete('/delete/:id', checkAuth, commentsControllers.deleteComment);
 
 module.exports = router;

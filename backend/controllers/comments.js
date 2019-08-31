@@ -72,6 +72,23 @@ exports.createComment = (req, res, next) => {
   }
 };
 
+exports.readComments = (req, res, next) => {
+  const collection = connection.db.collection('comments');
+  collection.find({postId: req.params.postId}).toArray((err, result) => {
+    if (err) {
+      res.status(500).json({
+        message: err,
+      });
+    } else {
+      console.log(result);
+      res.status(200).json({
+        message: 'Comments read successfully',
+        comments: result,
+      });
+    }
+  });
+};
+
 exports.deleteComment = (req, res, next) => {
   const commentsCollection = connection.db.collection('comments');
   const commentId = new ObjectID(req.params.id);
