@@ -58,6 +58,26 @@ exports.createVote = (req, res, next) => {
   }
 };
 
+exports.readVotes = (req, res, next) => {
+  const collection = connection.db.collection('votes');
+  collection.find({author: req.params.userId}).toArray((err, result) => {
+    if (err) {
+      res.status(500).json({
+        message: err,
+      });
+    } else if (!result.length) {
+      res.status(404).json({
+        message: 'Votes not found',
+      });
+    } else {
+      res.status(200).json({
+        message: 'Votes read successfully',
+        votes: result,
+      });
+    }
+  });
+};
+
 exports.deleteVote = (req, res, next) => {
   const collection = connection.db.collection('votes');
   const voteId = new ObjectID(req.params.id);
