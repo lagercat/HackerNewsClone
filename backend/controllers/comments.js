@@ -21,7 +21,7 @@ exports.createComment = (req, res, next) => {
           content: req.body.content,
           postId: req.body.postId,
           parentId: req.body.parrentId,
-          author: req.userData.userId,
+          author: req.userData.id,
           date: new Date(),
           points: 0,
         };
@@ -45,6 +45,7 @@ exports.createComment = (req, res, next) => {
                 } else {
                   res.status(201).json({
                     message: 'Comment added successfully',
+                    comment: result.ops[0],
                   });
                 }
               });
@@ -59,6 +60,7 @@ exports.createComment = (req, res, next) => {
             } else {
               res.status(201).json({
                 message: 'Comment added successfully',
+                comment: result.ops[0],
               });
             }
           });
@@ -95,7 +97,7 @@ exports.readComments = (req, res, next) => {
 exports.deleteComment = (req, res, next) => {
   const commentsCollection = connection.db.collection('comments');
   const commentId = new ObjectID(req.params.id);
-  commentsCollection.deleteOne({_id: commentId, author: req.userData.userId},
+  commentsCollection.deleteOne({_id: commentId, author: req.userData.id},
       (err, result) => {
         if (err) {
           res.status(500).json({

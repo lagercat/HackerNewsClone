@@ -39,7 +39,7 @@ exports.createUser = (req, res, next) => {
                   } else {
                     res.status(201).json({
                       message: 'User created successfully',
-                      _id: result.insertedId,
+                      user: result.ops[0],
                     });
                   }
                 });
@@ -73,6 +73,7 @@ exports.loginUser = (req, res, next) => {
             res.status(200).json({
               token: token,
               message: 'Login successful',
+              user: dbUser,
             });
           }
       );

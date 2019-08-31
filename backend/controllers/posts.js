@@ -12,7 +12,7 @@ exports.createPost = (req, res, next) => {
       title: req.body.title,
       content: req.body.content,
       type: req.body.type,
-      author: req.userData.Id,
+      author: req.userData.id,
       date: new Date(),
       points: 0,
     };
@@ -24,7 +24,7 @@ exports.createPost = (req, res, next) => {
       } else {
         res.status(201).json({
           message: 'Post created successfully',
-          id: result.insertedId,
+          post: result.ops[0],
         });
       }
     });
@@ -44,13 +44,13 @@ exports.updatePost = (req, res, next) => {
         title: req.body.title,
         content: req.body.content,
         type: req.body.type,
-        author: req.userData.Id,
+        author: req.userData.id,
         date: Date.parse(req.body.data),
         points: parseInt(req.body.points),
       },
     };
     const postId = new ObjectID(req.params.id);
-    collection.updateOne({_id: postId, author: req.userData.Id}, post,
+    collection.updateOne({_id: postId, author: req.userData.id}, post,
         (err, result) => {
           console.log(result);
           if (err) {
@@ -65,6 +65,7 @@ exports.updatePost = (req, res, next) => {
           } else {
             res.status(204).json({
               message: 'Post updated successfully',
+              post: result.ops[0],
             });
           }
         }
@@ -154,7 +155,7 @@ exports.readPosts = (req, res, next) => {
 exports.deletePost = (req, res, next) => {
   const collection = connection.db.collection('posts');
   const postId = new ObjectID(req.params.id);
-  collection.deleteOne({_id: postId, author: req.userData.Id},
+  collection.deleteOne({_id: postId, author: req.userData.id},
       (err, result) => {
         if (err) {
           res.status(500).json({

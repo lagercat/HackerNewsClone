@@ -7,7 +7,7 @@ exports.createVote = (req, res, next) => {
     docType: parseInt(req.body.docType),
     docId: req.body.docId,
     date: new Date(),
-    author: req.userData.Id,
+    author: req.userData.id,
   };
   if (!(req.body.docType == 0 || req.body.docType == 1)) {
     res.status(500).json({
@@ -27,7 +27,7 @@ exports.createVote = (req, res, next) => {
           message: 'Object not found',
         });
       } else {
-        votesCollection.insertOne(vote, (err, _) => {
+        votesCollection.insertOne(vote, (err, voteResult) => {
           if (err) {
             res.status(500).json({
               message: err,
@@ -39,7 +39,7 @@ exports.createVote = (req, res, next) => {
               $set: result,
             };
             documentCollection.updateOne({_id: documentId}, document,
-                (err, _2) => {
+                (err, _) => {
                   if (err) {
                     res.status(500).json({
                       message: err,
@@ -47,6 +47,7 @@ exports.createVote = (req, res, next) => {
                   } else {
                     res.status(201).json({
                       message: 'Vote created',
+                      vote: voteResult,
                     });
                   }
                 }
@@ -81,7 +82,7 @@ exports.readVotes = (req, res, next) => {
 exports.deleteVote = (req, res, next) => {
   const collection = connection.db.collection('votes');
   const voteId = new ObjectID(req.params.id);
-  collection.deleteOne({_id: voteId, author: req.userData.Id},
+  collection.deleteOne({_id: voteId, author: req.userData.id},
       (err, result) => {
         if (err) {
           res.status(500).json({
