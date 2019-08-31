@@ -79,8 +79,11 @@ exports.readComments = (req, res, next) => {
       res.status(500).json({
         message: err,
       });
+    } else if (!result.length) {
+      res.status(404).json({
+        message: 'Comments not found',
+      });
     } else {
-      console.log(result);
       res.status(200).json({
         message: 'Comments read successfully',
         comments: result,
