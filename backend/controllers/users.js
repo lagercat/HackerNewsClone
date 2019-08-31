@@ -37,6 +37,7 @@ exports.createUser = (req, res, next) => {
                       message: err,
                     });
                   } else {
+                    delete result.ops[0].password;
                     res.status(201).json({
                       message: 'User created successfully',
                       user: result.ops[0],
@@ -70,6 +71,7 @@ exports.loginUser = (req, res, next) => {
             }, 'some_secret_key', {
               expiresIn: '1h',
             });
+            delete dbUser.password;
             res.status(200).json({
               token: token,
               message: 'Login successful',
