@@ -7,11 +7,11 @@ const timeIntervals = [1, 168, 720, 0]; // number of hours, 0 stands for all
 exports.createPost = (req, res, next) => {
   const collection = connection.db.collection('posts');
   if (req.body.title && req.body.content
-    && (req.body.type == 1 || req.body.type == 0)) {
+    && (req.body.contentType == 1 || req.body.contentType == 0)) {
     const post = {
       title: req.body.title,
       content: req.body.content,
-      type: req.body.type,
+      contentType: req.body.contentType,
       author: req.userData.id,
       date: new Date(),
       points: 0,
@@ -38,12 +38,12 @@ exports.createPost = (req, res, next) => {
 exports.updatePost = (req, res, next) => {
   const collection = connection.db.collection('posts');
   if (req.body.title && req.body.content
-    && (req.body.type == 1 || req.body.type == 0)) {
+    && (req.body.contentType == 1 || req.body.contentType == 0)) {
     const post = {
       $set: {
         title: req.body.title,
         content: req.body.content,
-        type: req.body.type,
+        contentType: req.body.contentType,
         author: req.userData.id,
         date: Date.parse(req.body.data),
         points: parseInt(req.body.points),

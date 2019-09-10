@@ -5,5 +5,5 @@ export interface Post {
     date: Date;
     points: number;
     title: string;
-    type: string;
+    contentType: string;
 }

@@ -30,7 +30,7 @@ export class PostsService {
                             date: new Date(post.date),
                             points: post.date,
                             title: post.title,
-                            type: post.type,
+                            contentType: post.contentType,
                         };
                     })
                 };
