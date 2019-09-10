@@ -20,4 +20,8 @@ export class PostsService {
                 console.log(postData);
             });
     }
+
+    getPostUpdateListener() {
+	return this.postUpdated.asObservable();
+    }
 }
