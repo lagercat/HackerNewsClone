@@ -62,3 +62,7 @@ typings/
 
 # linter files
 .eslint*
+
+# Vim files
+*.swp
+*.swo
