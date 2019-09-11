@@ -145,7 +145,7 @@ exports.readPosts = (req, res, next) => {
         }
         res.status(200).json({
           message: 'Posts read successfully',
-          posts: result,
+          posts: result.slice((pageNumber - 1) * 12, pageNumber * 12),
         });
       }
     });
