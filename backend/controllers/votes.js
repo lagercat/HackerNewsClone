@@ -7,7 +7,7 @@ exports.createVote = (req, res, next) => {
     docType: parseInt(req.body.docType),
     docId: req.body.docId,
     date: new Date(),
-    author: req.userData.id,
+    author: req.userData.username,
   };
   if (!(req.body.docType == 0 || req.body.docType == 1)) {
     res.status(500).json({
@@ -82,7 +82,7 @@ exports.readVotes = (req, res, next) => {
 exports.deleteVote = (req, res, next) => {
   const collection = connection.db.collection('votes');
   const voteId = new ObjectID(req.params.id);
-  collection.deleteOne({_id: voteId, author: req.userData.id},
+  collection.deleteOne({_id: voteId, author: req.userData.username},
       (err, result) => {
         if (err) {
           res.status(500).json({

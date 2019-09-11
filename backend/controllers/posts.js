@@ -12,7 +12,7 @@ exports.createPost = (req, res, next) => {
       title: req.body.title,
       content: req.body.content,
       contentType: req.body.contentType,
-      author: req.userData.id,
+      author: req.userData.username,
       date: new Date(),
       points: 0,
     };
@@ -44,13 +44,13 @@ exports.updatePost = (req, res, next) => {
         title: req.body.title,
         content: req.body.content,
         contentType: req.body.contentType,
-        author: req.userData.id,
+        author: req.userData.username,
         date: Date.parse(req.body.data),
         points: parseInt(req.body.points),
       },
     };
     const postId = new ObjectID(req.params.id);
-    collection.updateOne({_id: postId, author: req.userData.id}, post,
+    collection.updateOne({_id: postId, author: req.userData.username}, post,
         (err, result) => {
           console.log(result);
           if (err) {
@@ -155,7 +155,7 @@ exports.readPosts = (req, res, next) => {
 exports.deletePost = (req, res, next) => {
   const collection = connection.db.collection('posts');
   const postId = new ObjectID(req.params.id);
-  collection.deleteOne({_id: postId, author: req.userData.id},
+  collection.deleteOne({_id: postId, author: req.userData.username},
       (err, result) => {
         if (err) {
           res.status(500).json({

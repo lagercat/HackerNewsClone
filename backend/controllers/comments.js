@@ -21,7 +21,7 @@ exports.createComment = (req, res, next) => {
           content: req.body.content,
           postId: req.body.postId,
           parentId: req.body.parrentId,
-          author: req.userData.id,
+          author: req.userData.username,
           date: new Date(),
           points: 0,
         };
@@ -97,7 +97,7 @@ exports.readComments = (req, res, next) => {
 exports.deleteComment = (req, res, next) => {
   const commentsCollection = connection.db.collection('comments');
   const commentId = new ObjectID(req.params.id);
-  commentsCollection.deleteOne({_id: commentId, author: req.userData.id},
+  commentsCollection.deleteOne({_id: commentId, author: req.userData.username},
       (err, result) => {
         if (err) {
           res.status(500).json({
