@@ -28,7 +28,7 @@ export class PostsService {
                             author: post.author,
                             content: post.content,
                             date: new Date(post.date),
-                            points: post.date,
+                            points: post.points,
                             title: post.title,
                             contentType: post.contentType,
                         };

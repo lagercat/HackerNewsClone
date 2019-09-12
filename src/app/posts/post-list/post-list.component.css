@@ -1,8 +1,34 @@
+:host {
+    display: block;
+    padding-top: 20px;
+    padding-left: 7.5%;
+    width: 80%;
+    margin: auto;
+    display: flex;
+}
+
 .example-card {
-  max-width: 400px;
+    width: 25%;
+    height: 200px;
+    float: left;
+    margin: auto;
+    margin-bottom: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+    word-wrap: break-word;
 }
 
 .example-header-image {
-  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
-  background-size: cover;
+    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+    background-size: cover;
+}
+
+button {
+    position: absolute;
+    bottom: 10px;
+}
+
+#votes {
+    right: 0;
+    color: #ffffff;
 }
