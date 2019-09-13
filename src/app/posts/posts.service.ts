@@ -56,8 +56,6 @@ export class PostsService {
         .subscribe((response) => {
             if ('post' in response) {
                 this.router.navigate(['/']);
-            } else {
-
             }
         });
     }

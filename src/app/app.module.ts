@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { MaterialModule } from './angular-material.module';
@@ -11,6 +11,8 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { PostListComponent } from './posts/post-list/post-list.component';
 import { PostCreateComponent } from './posts/post-create/post-create.component';
+import { ErrorComponent } from './error/error-component';
+import { ErrorInterceptor } from './error-interceptor';
 
 @NgModule({
   declarations: [
@@ -18,6 +20,7 @@ import { PostCreateComponent } from './posts/post-create/post-create.component';
     HeaderComponent,
     PostListComponent,
     PostCreateComponent,
+    ErrorComponent,
   ],
   imports: [
     AppRoutingModule,
@@ -27,7 +30,10 @@ import { PostCreateComponent } from './posts/post-create/post-create.component';
     HttpClientModule,
     ReactiveFormsModule,
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+  ],
+  bootstrap: [AppComponent],
+  entryComponents: [ErrorComponent],
 })
 export class AppModule { }
