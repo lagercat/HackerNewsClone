@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { PostsService } from '../posts.service';
 
 @Component({
     selector: 'app-post-list',
@@ -9,6 +10,8 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 export class PostCreateComponent implements OnInit {
 
     form: FormGroup;
+
+    constructor(private postsService: PostsService) {}
 
     ngOnInit() {
         this.form = new FormGroup({
@@ -22,6 +25,8 @@ export class PostCreateComponent implements OnInit {
         if (this.form.invalid) {
             return;
         }
+        this.postsService.createPost(this.form.value.title, this.form.value.content,
+                                     this.form.value.contentType);
         this.form.reset();
     }
 }
