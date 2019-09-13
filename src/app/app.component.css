@@ -6,3 +6,8 @@ html, body, app-root, .app-frame {
     box-sizing: border-box;
     color: #e0e0e0;
 }
+
+main {
+    width: 80%;
+    margin: 16px auto;
+}

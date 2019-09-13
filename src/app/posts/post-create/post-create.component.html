@@ -1,0 +1,28 @@
+<mat-card>
+    <form [formGroup]="form" (submit)="onSavePost()">
+        <mat-form-field>
+            <input matInput type="text" name="title" formControlName="title"
+            placeholder="Title">
+            <mat-error *ngIf="form.get('title').invalid">Please, something valid.</mat-error>
+        </mat-form-field>
+	<mat-form-field>
+	    <mat-label>What kind of post is yours?</mat-label>
+	    <mat-select name="contentType" formControlName="contentType">
+		<mat-option value="Link">
+		    Link 
+		</mat-option>
+		<mat-option value="Text">
+		    Text
+		</mat-option>
+	    </mat-select>
+            <mat-error *ngIf="form.get('contentType').invalid">Please, something valid.</mat-error>
+	</mat-form-field>
+        <mat-form-field>
+            <textarea matInput rows="4" name="content"
+            formControlName="content"
+            placeholder="Content"></textarea>
+            <mat-error *ngIf="form.get('content').invalid">Please, something valid.</mat-error>
+        </mat-form-field>
+        <button mat-raised-button color="accent" type="submit">Save post</button>
+    </form>
+</mat-card>
