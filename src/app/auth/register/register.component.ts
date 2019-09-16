@@ -13,12 +13,14 @@ export class RegisterComponent implements OnInit {
     form: FormGroup;
     confirmValidParentMatcher = new ConfirmValidParentMatcher();
 
-    constructor(private authservice: AuthService) {}
+    constructor(private authService: AuthService) {}
 
     ngOnInit() {
         this.form = new FormGroup({
             username: new FormControl(null, {validators: [Validators.required]}),
-            password: new FormControl(null, {validators: [Validators.required]}),
+            password: new FormControl(null, {validators: [Validators.required,
+                      Validators.minLength(8), Validators.maxLength(100),
+                      Validators.pattern('^[a-zA-Z0-9]*$')]}),
             passwordCheck: new FormControl(null, {validators: [Validators.required]}),
         }, validatePassword);
     }
@@ -27,6 +29,6 @@ export class RegisterComponent implements OnInit {
         if (this.form.invalid) {
             return;
         }
-        console.log('Valid bai!');
+        this.authService.createUser(this.form.value.username, this.form.value.password);
     }
 }
