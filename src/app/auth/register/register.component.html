@@ -1,0 +1,21 @@
+<mat-card>
+    <form (submit)="onSaveUser()" [formGroup]="form">
+        <mat-form-field>
+            <input matInput name="username" #username formControlName="username" placeholder="Username">
+            <mat-error *ngIf="form.get('username').invalid">Please, ented a valid username.</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput type="password" #password name="password" formControlName="password" placeholder="Password">
+            <mat-error *ngIf="form.get('password').invalid">Please, enter a valid password.</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput type="password" #passwordCheck name="passwordCheck"
+	    formControlName="passwordCheck" placeholder="Cofirm password"
+	    [errorStateMatcher]="confirmValidParentMatcher">
+            <mat-error *ngIf="form.get('passwordCheck').invalid">Please, enter a valid password.</mat-error>
+            <mat-error *ngIf="form.invalid && username.value != '' && password.value !=
+	    '' && passwordCheck.value != ''">Passwords do not match</mat-error>
+        </mat-form-field>
+        <button mat-raised-button color="accent" type="submit">Sign up</button>
+    </form>
+</mat-card>
