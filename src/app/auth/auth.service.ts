@@ -21,7 +21,19 @@ export class AuthService {
         };
         this.httpClient.post<{message: string, user: User}>(BACKEND_URL + 'create/', payload)
         .subscribe((response) => {
-            console.log('Account created');
+            this.loginUser(formUsername, formPassword);
+        });
+    }
+
+    loginUser(formUsername: string, formPassword: string) {
+        const payload = {
+            username: formUsername,
+            password: formPassword,
+        };
+        this.httpClient.post<{message: string, token: string}>
+        (BACKEND_URL + 'authenticate/', payload)
+        .subscribe((response) => {
+            this.router.navigate(['/']);
         });
     }
 }
