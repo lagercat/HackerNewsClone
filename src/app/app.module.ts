@@ -7,6 +7,7 @@ import { MaterialModule } from './angular-material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
+import { AuthModule } from './auth/auth.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { PostListComponent } from './posts/post-list/post-list.component';
@@ -24,6 +25,7 @@ import { ErrorInterceptor } from './error-interceptor';
   ],
   imports: [
     AppRoutingModule,
+    AuthModule,
     MaterialModule,
     BrowserModule,
     BrowserAnimationsModule,
