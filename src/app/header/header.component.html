@@ -9,7 +9,8 @@
 	</li>
 	<li *ngIf="authStatus">
 	    <span class='nav-elem'>
-		<a mat-button routerLinkActive="mat-accent" routerLink='/logout'>Logout</a>
+		<a mat-button routerLinkActive="mat-accent"
+						(click)="authService.logout()">Logout</a>
 	    </span>
 	</li>
 	<li *ngIf="!authStatus">
