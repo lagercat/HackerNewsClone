@@ -2,6 +2,25 @@
     <span><a routerLink='/'>HackerNewsCopy</a></span>
     <span class='spacer'></span>
     <ul>
-	<li><span class='nav-elem'><a routerLink='/create'>New Post</a></span></li>
+	<li *ngIf="authStatus">
+	    <span class='nav-elem'>
+		<a mat-button routerLinkActive="mat-accent"routerLink='/create'>New Post</a>
+	    </span>
+	</li>
+	<li *ngIf="authStatus">
+	    <span class='nav-elem'>
+		<a mat-button routerLinkActive="mat-accent" routerLink='/logout'>Logout</a>
+	    </span>
+	</li>
+	<li *ngIf="!authStatus">
+	    <span class='nav-elem'>
+		<a mat-button routerLinkActive="mat-accent" routerLink='/login'>Login</a>
+	    </span>
+	</li>	
+	<li *ngIf="!authStatus">
+	    <span class='nav-elem'>
+		<a mat-button routerLinkActive="mat-accent" routerLink='/register'>Register</a>
+	    </span>
+	</li>
     </ul>
 </mat-toolbar>
