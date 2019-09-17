@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 
+import { Subject } from 'rxjs';
+
 import { environment } from '../../environments/environment';
 import { User } from './user.model';
 
@@ -14,6 +16,7 @@ export class AuthService {
     private token: string = null;
     private username: string = null;
     private isAuthenticated = false;
+    private authStatusListener = new Subject<boolean>();
 
     constructor(private httpClient: HttpClient, private router: Router) {}
 
@@ -27,6 +30,10 @@ export class AuthService {
 
     getIsAuthenticated() {
         return this.isAuthenticated;
+    }
+
+    getAuthStatusListener() {
+        return this.authStatusListener.asObservable();
     }
 
     createUser(formUsername: string, formPassword: string) {
@@ -54,6 +61,7 @@ export class AuthService {
                 this.token = token;
                 this.username = username;
                 this.isAuthenticated =  true;
+                this.authStatusListener.next(true);
                 this.setAuthData(token, username);
             }
             this.router.navigate(['/']);
@@ -68,6 +76,7 @@ export class AuthService {
             this.isAuthenticated = true;
             this.token = token;
             this.username = username;
+            this.authStatusListener.next(true);
         }
     }
 
@@ -76,6 +85,7 @@ export class AuthService {
         this.token = null;
         this.username = null;
         this.deleteAuthData();
+        this.authStatusListener.next(false);
         this.router.navigate(['/']);
     }
 
